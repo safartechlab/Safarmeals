@@ -1,5 +1,4 @@
-const API_BASE = 'http://localhost:5000/api';
-
+const API_BASE = 'https://safarmeals.onrender.com/api';
 /**
  * Custom fetch client that matches standard Axios APIs,
  * but runs purely in-browser and fallback-ready.
