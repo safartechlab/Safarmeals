@@ -69,11 +69,11 @@ const seedDatabase = async () => {
     // 3. Seed Shop Profiles
     const shop1 = await Shop.create({
       ownerId: owner1._id,
-      shopName: 'The Gourmet Burger Hub',
-      description: 'Handcrafted premium smashed burgers, seasoned fries, and creamy dynamic milkshakes.',
-      logo: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=150&q=80',
-      banner: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1000&q=80',
-      cuisines: ['Burgers', 'Fast Food', 'American'],
+      shopName: 'Shree Kathiyawadi Khadki',
+      description: 'Authentic traditional Kathiyawadi and Gujarati thali, sweets, and spicy accompaniments.',
+      logo: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=150&q=80',
+      banner: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1000&q=80',
+      cuisines: ['Gujarati', 'Kathiyawadi', 'Thali'],
       address: {
         houseNo: 'Shop 102',
         streetName: 'Baker Street',
@@ -87,18 +87,18 @@ const seedDatabase = async () => {
       },
       openingTime: '08:00',
       closingTime: '23:00',
-      ratings: 4.8,
+      ratings: 4.9,
       reviewCount: 15,
       isApproved: true
     });
 
     const shop2 = await Shop.create({
       ownerId: owner2._id,
-      shopName: 'Pizza & Pasta Express',
-      description: 'Authentic stonebaked Neapolitan pizzas, creamy rich fettuccine, and fresh house salads.',
-      logo: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=150&q=80',
-      banner: 'https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=1000&q=80',
-      cuisines: ['Pizzas', 'Italian', 'Pasta'],
+      shopName: 'The Grand Gujarati Kitchen',
+      description: 'Classic Gujarati dishes, Dhokla, Handvo, Khichdi, and delicious Shrikhand.',
+      logo: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=150&q=80',
+      banner: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=1000&q=80',
+      cuisines: ['Gujarati', 'Vegetarian', 'Snacks'],
       address: {
         houseNo: 'Suite 404',
         streetName: 'Trattoria Boulevard',
@@ -112,7 +112,7 @@ const seedDatabase = async () => {
       },
       openingTime: '10:00',
       closingTime: '22:30',
-      ratings: 4.6,
+      ratings: 4.8,
       reviewCount: 12,
       isApproved: true
     });
@@ -146,12 +146,12 @@ const seedDatabase = async () => {
 
     // 4. Seed Categories per Shop
     // Shop 1 Categories
-    const catBurgers = await Category.create({ name: 'Smashed Burgers', shopId: shop1._id, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=80&q=80' });
-    const catSides = await Category.create({ name: 'Sides & Fries', shopId: shop1._id, image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=80&q=80' });
+    const catBurgers = await Category.create({ name: 'Thali Feast', shopId: shop1._id, image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=80&q=80' });
+    const catSides = await Category.create({ name: 'Kathiyawadi Starters', shopId: shop1._id, image: 'https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&w=80&q=80' });
 
     // Shop 2 Categories
-    const catPizzas = await Category.create({ name: 'Neapolitan Pizzas', shopId: shop2._id, image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=80&q=80' });
-    const catPastas = await Category.create({ name: 'Artisan Pastas', shopId: shop2._id, image: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&w=80&q=80' });
+    const catPizzas = await Category.create({ name: 'Gujarati Farsan', shopId: shop2._id, image: 'https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&w=80&q=80' });
+    const catPastas = await Category.create({ name: 'Sweets & Shrikhand', shopId: shop2._id, image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=80&q=80' });
 
     // Shop 3 Categories
     const catCakes = await Category.create({ name: 'Gourmet Cakes', shopId: shop3._id, image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=80&q=80' });
@@ -160,48 +160,48 @@ const seedDatabase = async () => {
     console.log('Categories established! Seeding Food Items...');
 
     // 5. Seed Food Items
-    // Burger Shop
+    // Gujarati Shop 1
     const foodB1 = await FoodItem.create({
       shopId: shop1._id, categoryId: catBurgers._id,
-      name: 'SAFARMEAL Classic Cheeseburger', description: 'Double prime beef patty, melted cheddar, pickles, house sauce, toasted brioche bun.',
-      price: 180, discountPrice: 150, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80',
-      ingredients: ['Beef Patty', 'Cheddar Cheese', 'Pickles', 'Brioche Bun'], isVeg: false, isAvailable: true, preparationTime: 15, rating: 4.8, reviewCount: 10
+      name: 'Premium Gujarati Royal Thali', description: 'A rich assortment of rotli, dal, kadhi, shaak, dhokla, sweets, and rice.',
+      price: 280, discountPrice: 249, image: '/gujarati_thali.png',
+      ingredients: ['Rotli', 'Dal', 'Kadhi', 'Shaak', 'Dhokla', 'Basmati Rice'], isVeg: true, isAvailable: true, preparationTime: 20, rating: 4.9, reviewCount: 15
     });
 
     const foodB2 = await FoodItem.create({
       shopId: shop1._id, categoryId: catBurgers._id,
-      name: 'Smoked Bacon Avocado Smashed Burger', description: 'Crisp applewood smoked bacon, fresh avocado, swiss cheese, garlic aioli.',
-      price: 240, discountPrice: 220, image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=400&q=80',
-      ingredients: ['Bacon', 'Avocado', 'Beef Patty', 'Swiss Cheese'], isVeg: false, isAvailable: true, preparationTime: 18, rating: 4.7, reviewCount: 8
+      name: 'Ringan No Olo with Bajra Rotla', description: 'Traditional roasted eggplant mash served with hot clay-oven pearl millet flatbreads.',
+      price: 180, discountPrice: 160, image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80',
+      ingredients: ['Roasted Eggplant', 'Bajra Flour', 'Garlic', 'Jaggery'], isVeg: true, isAvailable: true, preparationTime: 18, rating: 4.8, reviewCount: 10
     });
 
     const foodB3 = await FoodItem.create({
       shopId: shop1._id, categoryId: catSides._id,
-      name: 'Loaded Truffle Parmesan Fries', description: 'Hand-cut russet potatoes tossed in black truffle oil, freshly grated parmesan, chives.',
-      price: 130, image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=80',
-      ingredients: ['French Fries', 'Truffle Oil', 'Parmesan', 'Chives'], isVeg: true, isAvailable: true, preparationTime: 10, rating: 4.9, reviewCount: 12
+      name: 'Classic Kathiyawadi Khichdi Kadhi', description: 'Comforting yellow lentil rice mash accompanied by spiced sweet-sour yogurt kadhi.',
+      price: 150, image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80',
+      ingredients: ['Rice', 'Moong Dal', 'Yogurt', 'Spices'], isVeg: true, isAvailable: true, preparationTime: 12, rating: 4.7, reviewCount: 9
     });
 
-    // Pizza Shop
+    // Gujarati Shop 2
     const foodP1 = await FoodItem.create({
       shopId: shop2._id, categoryId: catPizzas._id,
-      name: 'Margherita DOC Pizza', description: 'San Marzano tomatoes, fresh buffalo mozzarella, fragrant basil leaves, extra virgin olive oil.',
-      price: 299, discountPrice: 249, image: 'https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?auto=format&fit=crop&w=400&q=80',
-      ingredients: ['Tomato Sauce', 'Buffalo Mozzarella', 'Basil', 'Olive Oil'], isVeg: true, isAvailable: true, preparationTime: 15, rating: 4.8, reviewCount: 15
+      name: 'Surati Locho & Khaman Combo', description: 'Soft, savory steamed chickpea flour cakes served with green chutney and sev.',
+      price: 90, discountPrice: 79, image: 'https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&w=400&q=80',
+      ingredients: ['Chana Dal', 'Spices', 'Green Chutney', 'Sev'], isVeg: true, isAvailable: true, preparationTime: 10, rating: 4.8, reviewCount: 14
     });
 
     const foodP2 = await FoodItem.create({
       shopId: shop2._id, categoryId: catPizzas._id,
-      name: 'Spicy Diavola Pepperoni Pizza', description: 'Zesty pepperoni, spicy salami, hot honey drizzle, fresh mozzarella.',
-      price: 349, image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=400&q=80',
-      ingredients: ['Pepperoni', 'Salami', 'Hot Honey', 'Mozzarella'], isVeg: false, isAvailable: true, preparationTime: 15, rating: 4.6, reviewCount: 9
+      name: 'Traditional Gujarati Handvo', description: 'Savory lentil and vegetable cake baked with mustard seeds and sesame.',
+      price: 100, image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80',
+      ingredients: ['Mixed Lentils', 'Bottle Gourd', 'Mustard Seeds', 'Sesame'], isVeg: true, isAvailable: true, preparationTime: 15, rating: 4.8, reviewCount: 12
     });
 
     const foodP3 = await FoodItem.create({
       shopId: shop2._id, categoryId: catPastas._id,
-      name: 'Creamy White Truffle Mushroom Fettuccine', description: 'Handmade pasta, wild mushrooms, creamy white wine sauce, micro-shaved black truffles.',
-      price: 279, image: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&w=400&q=80',
-      ingredients: ['Fettuccine', 'Wild Mushrooms', 'Truffle Oil', 'Cream'], isVeg: true, isAvailable: true, preparationTime: 20, rating: 4.7, reviewCount: 11
+      name: 'Kesar Shrikhand with Puri', description: 'Sweet strained yogurt flavored with saffron, served with hot puffed golden puris.',
+      price: 120, image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=400&q=80',
+      ingredients: ['Strained Yogurt', 'Saffron', 'Sugar', 'Wheat Flour Puris'], isVeg: true, isAvailable: true, preparationTime: 12, rating: 4.9, reviewCount: 18
     });
 
     // Dessert Shop
@@ -224,8 +224,8 @@ const seedDatabase = async () => {
     // 6. Seed Coupons
     await Offer.create([
       { title: 'Newbie Welcome Pack', code: 'WELCOME50', description: 'Get 50% off on your first food order', discountPercentage: 50, maxDiscountAmount: 120, minOrderAmount: 150 },
-      { title: 'Burger Bonanza', code: 'BURGERLOVE', description: 'Extra 20% off on gourmet burgers', discountPercentage: 20, maxDiscountAmount: 100, minOrderAmount: 200 },
-      { title: 'Pizza Feast Special', code: 'PIZZA30', description: '30% off on Neapolitan Pizzas', discountPercentage: 30, maxDiscountAmount: 150, minOrderAmount: 250 }
+      { title: 'Kathiyawadi Special', code: 'KATHIAWAD', description: 'Extra 20% off on premium thalis', discountPercentage: 20, maxDiscountAmount: 100, minOrderAmount: 200 },
+      { title: 'Gujarati Sweet Feast', code: 'SWEETGUJ', description: '30% off on authentic sweets', discountPercentage: 30, maxDiscountAmount: 150, minOrderAmount: 250 }
     ]);
     console.log('Coupons and active promotions established!');
 
