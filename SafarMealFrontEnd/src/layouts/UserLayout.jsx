@@ -13,7 +13,7 @@ const UserLayout = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [addressModalOpen, setAddressModalOpen] = useState(false);
   const [detectingLocation, setDetectingLocation] = useState(false);
-  
+
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const { items, totalAmount } = useSelector((state) => state.cart);
 
@@ -39,7 +39,7 @@ const UserLayout = () => {
       alert("Geolocation is not supported by your browser");
       return;
     }
-    
+
     setDetectingLocation(true);
     navigator.geolocation.getCurrentPosition(
       async (position) => {
@@ -48,14 +48,14 @@ const UserLayout = () => {
           // OpenStreetMap Nominatim free reverse geocoding API
           const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
           const data = await response.json();
-          
+
           let houseNo = "";
           let streetName = "";
           let society = "";
           let city = "Manhattan";
           let state = "NY";
           let zipCode = "10001";
-          
+
           if (data && data.address) {
             const addr = data.address;
             houseNo = addr.house_number || addr.building || "";
@@ -67,9 +67,9 @@ const UserLayout = () => {
           } else {
             streetName = `Coordinate (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`;
           }
-          
+
           const combinedAddressLine = `${houseNo ? houseNo + ', ' : ''}${society ? society + ', ' : ''}${streetName}`;
-          
+
           const payload = {
             label: 'Current Location',
             houseNo,
@@ -83,7 +83,7 @@ const UserLayout = () => {
             longitude,
             isDefault: true
           };
-          
+
           const res = await api.post('/user/addresses', payload);
           if (res.data.success) {
             const profileRes = await api.get('/auth/me');
@@ -170,7 +170,7 @@ const UserLayout = () => {
               <Link to="/restaurants" className={`text-sm font-medium hover:text-brand-500 transition py-2 ${location.pathname === '/restaurants' ? 'text-brand-500 border-b-2 border-brand-500' : 'text-gray-600'}`}>
                 Explore Restaurants
               </Link>
-              
+
               {/* Conditional dashboards for roles */}
               {isAuthenticated && user?.role === 'admin' && (
                 <Link to="/admin/dashboard" className="flex items-center gap-1.5 text-sm font-medium text-purple-600 hover:text-purple-700 py-1.5 px-3 bg-purple-50 rounded-full transition">
@@ -376,7 +376,7 @@ const UserLayout = () => {
             {/* List of Saved Locations */}
             <div className="space-y-3">
               <label className="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block">Saved Locations</label>
-              
+
               {(!user?.addresses || user.addresses.length === 0) ? (
                 <div className="text-center py-6 bg-gray-50 border border-dashed border-gray-250 rounded-2xl p-4">
                   <MapPin size={24} className="mx-auto text-gray-300 mb-1" />
@@ -402,7 +402,7 @@ const UserLayout = () => {
                         <p className="text-xs font-bold text-gray-800 truncate max-w-[280px]">{addr.addressLine}</p>
                         <p className="text-[10px] text-gray-400 font-semibold">{addr.city}, {addr.state} - {addr.zipCode}</p>
                       </div>
-                      
+
                       {addr.isDefault && (
                         <span className="text-emerald-500 shrink-0">
                           <CheckCircle size={18} fill="currentColor" className="text-white fill-emerald-500" />
