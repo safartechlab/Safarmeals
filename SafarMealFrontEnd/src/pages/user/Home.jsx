@@ -56,20 +56,30 @@ const Home = () => {
         // Fetch all active restaurants within 5 km
         const restRes = await api.get(`/user/restaurants?${queryParams.toString()}`);
         if (restRes.data.success && restRes.data.data) {
-          const sorted = [...restRes.data.data].sort((a, b) => b.ratings - a.ratings);
-          setFeaturedRestaurants(sorted.slice(0, 3));
+          const gujaratiOnly = restRes.data.data.filter(r => 
+            r.cuisines.some(c => c.toLowerCase().includes('gujarati') || c.toLowerCase().includes('kathiyawadi'))
+          );
+          const sorted = [...gujaratiOnly].sort((a, b) => b.ratings - a.ratings);
+          setFeaturedRestaurants(sorted.slice(0, 2));
 
           // Extrapolate list of cuisines as categories
-          const allCuisines = Array.from(new Set(restRes.data.data.flatMap(r => r.cuisines)));
+          const allCuisines = Array.from(new Set(gujaratiOnly.flatMap(r => r.cuisines)));
           setCategories(allCuisines.slice(0, 6));
         }
 
         // Fetch all food items (global search with no query returning all)
         const foodsRes = await api.get('/user/foods/search');
         if (foodsRes.data.success && foodsRes.data.data) {
-          // Sort foods by rating or name, get top 8
+          // Sort foods by rating or name, get top 8 Gujarati foods
           const sortedFoods = [...foodsRes.data.data].sort((a, b) => (b.rating || 4.5) - (a.rating || 4.5));
-          setFeaturedFoods(sortedFoods.slice(0, 8));
+          const gujaratiFoods = sortedFoods.filter(f => 
+            f.shopId?.cuisines?.some(c => c.toLowerCase().includes('gujarati') || c.toLowerCase().includes('kathiyawadi')) ||
+            f.name.toLowerCase().includes('gujarati') || f.name.toLowerCase().includes('kathiyawadi') ||
+            f.name.toLowerCase().includes('thali') || f.name.toLowerCase().includes('khichdi') ||
+            f.name.toLowerCase().includes('handvo') || f.name.toLowerCase().includes('shrikhand') ||
+            f.name.toLowerCase().includes('locho')
+          );
+          setFeaturedFoods(gujaratiFoods.slice(0, 8));
         }
 
         // Fetch active coupon advertisements
